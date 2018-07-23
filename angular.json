@@ -30,7 +30,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/all.min.js"
+              "src/app/font-awesome/all.min.js"
             ]
           },
           "configurations": {
