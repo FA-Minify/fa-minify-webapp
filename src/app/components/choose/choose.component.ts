@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IconService } from '../../services/icon.service';
 
 @Component({
   selector: 'fm-choose',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChooseComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    protected readonly IconService: IconService
+  ) { }
 
   ngOnInit() {
+  }
+
+  protected get farIcons() {
+    return this.IconService.availableIcons.far || [];
+  }
+
+  protected get falIcons() {
+    return this.IconService.availableIcons.fal || [];
+  }
+
+  protected get fasIcons() {
+    return this.IconService.availableIcons.fas || [];
+  }
+
+  protected get fabIcons() {
+    return this.IconService.availableIcons.fab || [];
   }
 
 }

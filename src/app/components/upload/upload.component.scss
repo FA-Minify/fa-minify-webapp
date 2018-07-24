@@ -1,0 +1,36 @@
+$color:darkslategray;
+.wrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  padding-top: 80px;
+  justify-content: center;
+}
+
+.droptarget {
+  border: 2px dashed rgba($color, .3);
+  background: rgba($color, .05);
+  color: rgba($color, .4);
+  width: 400px;
+  height: 300px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.is-dragover {
+    border: 2px dashed rgba($color, .3);
+    background: rgba($color, .05);
+    color: rgba($color, .6);
+  }
+  label {
+    text-align: center;
+  }
+  .upload-icon {
+    font-size: 3em;
+  }
+  input {
+    position: absolute;
+    left: 100vw;
+  }
+}

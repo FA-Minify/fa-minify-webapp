@@ -1,0 +1,60 @@
+$sides: (top, bottom, left, right); // Leave this variable alone
+/*
+  copied from bootstrap 4
+  (https://github.com/twbs/bootstrap/blob/27f553c9651dbe81a8aaf821aa2bf15670d9adb8/scss/_variables.scss)
+  stylelint-disable
+*/
+
+$spacer: 16px !default;
+$spacers: () !default;
+$spacers: map-merge(( //
+0: 0, //
+1: ($spacer * .25), //
+2: ($spacer * .5), //
+3: $spacer, //
+4: ($spacer * 1.5), //
+5: ($spacer * 3) //
+), $spacers);
+/*
+  add bootstrap spacing utilities (e.g. mb-2, pt-4, px-2 and so on)
+*/
+
+@each $size,
+$length in $spacers {
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 1)}-#{$size} {
+      margin-#{$side}: $length !important;
+    }
+    .p#{str-slice($side, 0, 1)}-#{$size} {
+      padding-#{$side}: $length !important;
+    }
+  }
+  .mx-#{$size} {
+    margin-left: $length !important;
+    margin-right: $length !important;
+  }
+  .my-#{$size} {
+    margin-top: $length !important;
+    margin-bottom: $length !important;
+  }
+  .px-#{$size} {
+    padding-left: $length !important;
+    padding-right: $length !important;
+  }
+  .py-#{$size} {
+    padding-top: $length !important;
+    padding-bottom: $length !important;
+  }
+  .p-#{$size} {
+    padding-top: $length !important;
+    padding-bottom: $length !important;
+    padding-left: $length !important;
+    padding-right: $length !important;
+  }
+  .m-#{$size} {
+    margin-top: $length !important;
+    margin-bottom: $length !important;
+    margin-left: $length !important;
+    margin-right: $length !important;
+  }
+}
