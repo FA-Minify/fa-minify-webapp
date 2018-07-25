@@ -15,19 +15,19 @@ export class ChooseComponent implements OnInit {
   ngOnInit() {
   }
 
-  protected get farIcons() {
+  public get farIcons() {
     return this.IconService.availableIcons.far || [];
   }
 
-  protected get falIcons() {
+  public get falIcons() {
     return this.IconService.availableIcons.fal || [];
   }
 
-  protected get fasIcons() {
+  public get fasIcons() {
     return this.IconService.availableIcons.fas || [];
   }
 
-  protected get fabIcons() {
+  public get fabIcons() {
     return this.IconService.availableIcons.fab || [];
   }
 

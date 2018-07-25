@@ -7,13 +7,15 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 import { ChooseComponent } from './components/choose/choose.component';
 import { HeaderComponent } from './components/header/header.component';
+import { DroptargetComponent } from './components/droptarget/droptarget.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadComponent,
     ChooseComponent,
-    HeaderComponent
+    HeaderComponent,
+    DroptargetComponent
   ],
   imports: [
     BrowserModule,
