@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getIcons, IconType } from 'fa-minify';
+import { getIconsFromFile, IconType } from 'fa-minify';
 
 @Injectable({ providedIn: 'root' })
 export class IconService {
@@ -10,6 +10,6 @@ export class IconService {
   }
 
   public loadIcons(fileContent: string) {
-    this.availableIcons = getIcons(fileContent);
+    this.availableIcons = getIconsFromFile(fileContent);
   }
 }
