@@ -1,0 +1,29 @@
+.icon {
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+  .icon-name {
+    font-size: 75%;
+    word-wrap: break-word;
+    padding: 10px;
+  }
+  svg {
+    margin: 10px;
+    height: 3em;
+    width: 3em;
+    fill: slategray;
+  }
+}
+
+.icon:hover,
+.icon.selected {
+  background: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  .icon-name {
+    background: slategray;
+    color: white;
+  }
+  svg {
+    fill: darken(slategray, 20%);
+  }
+}

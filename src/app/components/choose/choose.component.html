@@ -1,12 +1,19 @@
-<div>
-  <strong>FAR:</strong> {{farIcons.length}} Icons
-</div>
-<div>
-  <strong>FAS:</strong> {{fasIcons.length}} Icons
-</div>
-<div>
-  <strong>FAL:</strong> {{falIcons.length}} Icons
-</div>
-<div>
-  <strong>FAB:</strong> {{fabIcons.length}} Icons
+<input type="text" [(ngModel)]="filter" class="filter-input">
+<div *ngFor="let type of types">
+  <div *ngIf="icons[type]">
+    <strong>{{ type | uppercase }}</strong>
+    <div class="icon-wrapper">
+      <div 
+        class="icon" 
+        *ngFor="let item of icons[type] | keyvalue"
+        [class.hidden]="!matchesFilter(item.key)">
+        <fm-fa-icon 
+          [iconName]="item.key" 
+          [icon]="icons[type][item.key]"
+          [selected]="selectedIcons[type][item.key]"
+          (doToggleSelection)="toggleSelection(type, $event.iconName)">
+        </fm-fa-icon>
+      </div>
+    </div>
+  </div>
 </div>

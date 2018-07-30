@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -8,6 +9,7 @@ import { ROUTES } from './app.routes';
 import { ChooseComponent } from './components/choose/choose.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DroptargetComponent } from './components/droptarget/droptarget.component';
+import { FAIconComponent } from './components/fa-icon/fa-icon.component';
 
 @NgModule({
   declarations: [
@@ -15,10 +17,12 @@ import { DroptargetComponent } from './components/droptarget/droptarget.componen
     UploadComponent,
     ChooseComponent,
     HeaderComponent,
-    DroptargetComponent
+    DroptargetComponent,
+    FAIconComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],

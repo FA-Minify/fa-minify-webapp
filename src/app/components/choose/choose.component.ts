@@ -1,34 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { IconService } from '../../services/icon.service';
+import { IconType } from '../../../../node_modules/fa-minify/dist';
 
 @Component({
   selector: 'fm-choose',
   templateUrl: './choose.component.html',
   styleUrls: ['./choose.component.scss']
 })
-export class ChooseComponent implements OnInit {
+export class ChooseComponent {
 
-  constructor(
-    protected readonly IconService: IconService
-  ) { }
+  public filter: string;
+  public types = ['fal', 'far', 'fas', 'fab'];
 
-  ngOnInit() {
+  public selectedIcons: { [type in IconType]: { [iconName: string]: boolean } } = {
+    fab: {}, far: {}, fas: {}, fal: {}
   }
 
-  public get farIcons() {
-    return this.IconService.availableIcons.far || [];
+  constructor(protected readonly IconService: IconService) { }
+
+  public get icons() {
+    return this.IconService.availableIcons || {};
   }
 
-  public get falIcons() {
-    return this.IconService.availableIcons.fal || [];
+  public matchesFilter(iconName: string) {
+    return !this.filter || iconName.toLowerCase().includes(this.filter.toLowerCase());
   }
 
-  public get fasIcons() {
-    return this.IconService.availableIcons.fas || [];
-  }
-
-  public get fabIcons() {
-    return this.IconService.availableIcons.fab || [];
+  public toggleSelection(type: IconType, iconName: string) {
+    this.selectedIcons[type][iconName] = !this.selectedIcons[type][iconName];
   }
 
 }

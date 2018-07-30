@@ -1,0 +1,26 @@
+.filter-input {
+  display: block;
+  margin: 0 auto;
+  width: 400px;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid lighten(slategray, 30%);
+  border-radius: 5px;
+  outline: none;
+  &:focus, &:active {
+    border: 1px solid lighten(slategray, 10%);
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  flex-wrap: wrap; //justify-content: center;
+}
+
+.icon {
+  display: flex;
+  margin: 5px;
+  &.hidden {
+    display: none;
+  }
+}
