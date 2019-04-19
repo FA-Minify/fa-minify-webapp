@@ -12,8 +12,8 @@ export class DroptargetComponent implements OnInit {
 
   constructor(
     protected readonly ngZone: NgZone,
-    protected readonly Router: Router,
-    protected readonly IconService: IconService
+    protected readonly router: Router,
+    protected readonly iconService: IconService
   ) { }
 
   public ngOnInit() {
@@ -34,8 +34,8 @@ export class DroptargetComponent implements OnInit {
   protected loadfile(file: File) {
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      this.IconService.loadIcons(fileReader.result);
-      this.Router.navigate(['choose']);
+      this.iconService.loadIcons(fileReader.result as string);
+      this.router.navigate(['choose']);
     };
     fileReader.readAsText(file);
   }
