@@ -4,14 +4,25 @@ import { getIconsFromFile, IconType } from 'fa-minify';
 @Injectable({ providedIn: 'root' })
 export class IconService {
 
-  public availableIcons: { [type in IconType]: { [iconName: string]: any; } } = {
-    fab: {}, fal: {}, far: {}, fas: {}
+  public availableIcons = null;
+
+  public emptyIcons = {
+    fab: [], fal: [], far: [], fas: []
   };
 
-  constructor() {
-  }
-
   public loadIcons(fileContent: string) {
-    this.availableIcons = getIconsFromFile(fileContent);
+    const fileIcons = getIconsFromFile(fileContent);
+
+    if (!fileIcons) {
+      return;
+    }
+
+    this.availableIcons = {};
+    Object.keys(fileIcons).forEach(type => {
+      this.availableIcons[type] = Object.keys(fileIcons[type] || {}).map(iconKey => {
+        return [...fileIcons[type][iconKey], iconKey];
+      });
+    });
+
   }
 }

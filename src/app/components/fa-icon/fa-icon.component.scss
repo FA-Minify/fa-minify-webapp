@@ -1,29 +1,42 @@
+$fa-minify-blue: #6DA5E8;
+
 .icon {
   width: 100px;
+  min-height: 140px;
   text-align: center;
+  display: inline-block;
+  border-radius: 10px;
   cursor: pointer;
+  overflow: hidden;
+
   .icon-name {
     font-size: 75%;
     word-wrap: break-word;
     padding: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
   svg {
-    margin: 10px;
+    margin: 20px 10px;
     height: 3em;
     width: 3em;
-    fill: slategray;
+    fill: $fa-minify-blue;
   }
 }
 
-.icon:hover,
+.icon:hover {
+  box-shadow: lighten($fa-minify-blue, 20%) 0px 0px 25px 0px;
+}
+
 .icon.selected {
-  background: white;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  .icon-name {
-    background: slategray;
-    color: white;
-  }
+  background: $fa-minify-blue;
+  box-shadow: lighten($fa-minify-blue, 20%) 0px 0px 25px 0px;
+  color: white;
+
   svg {
-    fill: darken(slategray, 20%);
+    fill: white;
   }
 }

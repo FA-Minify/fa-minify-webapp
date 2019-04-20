@@ -12,6 +12,7 @@
             "element",
             "fm",
             "kebab-case"
-        ]
+        ],
+        "no-console": false
     }
 }

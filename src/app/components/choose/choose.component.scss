@@ -1,49 +1,104 @@
-.filter-input {
+$fa-minify-blue: #6DA5E8;
+
+.drop-card {
+  position: fixed;
+  left: 1em;
+  top: 1em;
+  bottom: 1em;
+  right: 1em;
+
+  border-radius: 10px;
+  box-shadow: lighten($fa-minify-blue, 20%) 0px 0px 25px 0px;
+  overflow: auto;
+}
+
+.logo {
+  padding: 2em 2em 4em;
   display: block;
-  margin: 0 auto;
-  width: 400px;
-  max-width: 100%;
-  padding: 10px;
-  border: 1px solid lighten(slategray, 30%);
-  border-radius: 5px;
+  box-shadow: lighten($fa-minify-blue, 20%) 0px 0px 25px 0px;
+}
+
+.toolbar {
+  transform: translateY(-50%);
+  padding: 0 2em;
+  display: flex;
+  position: sticky;
+  top:25px;
+  .spacer {
+    flex-grow: 1;
+  }
+}
+
+.toolbar-item {
+  background: white;
+  color: $fa-minify-blue;
+  border: none;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1em;
+  box-shadow: lighten($fa-minify-blue, 20%) 0px 0px 25px 0px;
+  margin: 0 10px;
+  padding: .5em 2em;
   outline: none;
-  &:focus,
-  &:active {
-    border: 1px solid lighten(slategray, 10%);
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+}
+
+.toolbar-button {
+  &:not(&--active) {
+
+    &:active,
+    &:focus,
+    &:hover {
+      background: lighten($fa-minify-blue, 30%);
+    }
+  }
+
+  cursor: pointer;
+
+  &--active {
+    background: $fa-minify-blue;
+    color: white;
   }
 }
 
-.content-wrapper {
-  display: flex;
-}
-
-.filter-column {
-  flex-basis: 300px;
-  button {
-    display: block;
-    background: none;border:none;
-    padding: 5px 20px;
-    width: 200px;
-    text-align: left;
-    &:not([disabled]){cursor: pointer;}
+.toolbar-input {
+  &::placeholder {
+    color: lighten($fa-minify-blue, 20%);
+    font-weight: 700;
+    opacity: 1;
   }
 }
 
-.content-column {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
+.search {
+  position: relative;
+
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 700;
+    color: $fa-minify-blue;
+    vertical-align: center;
+  }
 }
 
-.icon-wrapper {
-  display: flex;
-  flex-wrap: wrap; //justify-content: center;
+.icons {
+  padding: 2em;
+  color: $fa-minify-blue;
 }
-
-.icon {
-  display: flex;
+fm-fa-icon {
   margin: 5px;
-  &.hidden {
-    display: none;
-  }
 }

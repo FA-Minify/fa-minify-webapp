@@ -1,9 +1,31 @@
-<div class="wrapper">
-  <div class="droptarget" #droptarget>
-    <label>
-      <i class="upload-icon fas fa-cloud-upload mb-4"></i>
-      <br> Drop File
-      <input type="file">
-    </label>
+<div class="drop-card">
+    
+  <div class="drop-target" #dropTarget>
+
+    <div class="drop-content" *ngIf="!isDragOver">
+      <img class="logo" src="assets/logo.png"><br>
+      <p class="upper-description">
+        About to add 1000kb worth of Javascript just to display those three social icons on your website footer? <br>
+        <strong>Don't be that person.</strong>
+      </p>
+      
+      <div class="lower-description-wrapper">
+        <p class="lower-description">
+          Simply drag and drop your all.js file,
+          select the icons you actually use,
+          save the minified file and go on with your life.-
+        </p>
+        <img src="assets/file-and-mouse.png">
+      </div>
+    </div>
+
+    <div class="drop-content-overlay" *ngIf="isDragOver">
+      <div>
+        <img src="assets/file-and-arrow.png"><br>
+        <strong>Drop file here</strong>
+      </div>
+    </div>
+
   </div>
+
 </div>

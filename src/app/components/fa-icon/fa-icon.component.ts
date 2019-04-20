@@ -13,17 +13,14 @@ export class FAIconComponent {
   public icon: any[];
 
   @Input()
-  public iconName: string;
-
-  @Input()
   public selected: boolean;
 
   @Output()
   public doToggleSelection = new EventEmitter<{ iconName: string }>();
 
-  constructor(protected readonly IconService: IconService) { }
+  constructor(protected readonly iconService: IconService) { }
 
   public selectIcon() {
-    this.doToggleSelection.emit({ iconName: this.iconName });
+    this.doToggleSelection.emit({ iconName: this.icon[5] });
   }
 }
