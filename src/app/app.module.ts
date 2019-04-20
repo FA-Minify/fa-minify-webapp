@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { VirtualScrollerModule } from 'ngx-virtual-scroller';
-import { FileDropModule } from 'ngx-file-drop';
 
 import { AppComponent } from './app.component';
 import { UploadComponent } from './components/upload/upload.component';
@@ -23,8 +21,6 @@ import { FAIconComponent } from './components/fa-icon/fa-icon.component';
   imports: [
     BrowserModule,
     FormsModule,
-    VirtualScrollerModule,
-    FileDropModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],
