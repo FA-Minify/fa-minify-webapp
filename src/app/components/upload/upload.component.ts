@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone, OnDestroy } from '@angular/core';
-import { UploadEvent } from 'ngx-file-drop';
 import { IconService } from '../../services/icon.service';
 import { Router } from '@angular/router';
 
