@@ -12,18 +12,23 @@ $fa-minify-blue: #6DA5E8;
   overflow: auto;
 }
 
+.card-header {
+  position: sticky;
+  top: 0;
+}
+
 .logo {
   padding: 2em 2em 4em;
   display: block;
   box-shadow: lighten($fa-minify-blue, 20%) 0px 0px 25px 0px;
+  background: white;
 }
 
 .toolbar {
   transform: translateY(-50%);
   padding: 0 2em;
   display: flex;
-  position: sticky;
-  top:25px;
+
   .spacer {
     flex-grow: 1;
   }
@@ -99,6 +104,42 @@ $fa-minify-blue: #6DA5E8;
   padding: 2em;
   color: $fa-minify-blue;
 }
-fm-fa-icon {
-  margin: 5px;
+
+.download-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: $fa-minify-blue;
+  background: #FFF;
+  padding: 1em;
+  transition: transform 250ms ease-in-out;
+  transform: translateY(250px);
+
+  display: flex;
+
+  box-shadow: lighten($fa-minify-blue, 20%) 0px 0px 25px 0px;
+
+  font-size: 1.5rem;
+
+  &.up {
+    transform: translateY(0);
+  }
+
+  .text-wrapper {
+    flex-grow: 1;
+
+    .lower-text {
+      font-size: 1.2rem;
+    }
+  }
+
+  .banner-button {
+    background: $fa-minify-blue;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
 }

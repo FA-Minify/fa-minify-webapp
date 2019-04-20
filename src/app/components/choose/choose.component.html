@@ -1,34 +1,67 @@
 <div class="drop-card">
-  <div class="logo">
-    <a [routerLink]="'/'">
-      <img src="assets/logo.png">
-    </a>
-  </div>
 
-  <div class="toolbar">
-    <button type="button" class="toolbar-item toolbar-button" [class.toolbar-button--active]="selectedTypes.far" (click)="selectType('far')">Regular</button>
-    <button type="button" class="toolbar-item toolbar-button" [class.toolbar-button--active]="selectedTypes.fas" (click)="selectType('fas')">Solid</button>
-    <button type="button" class="toolbar-item toolbar-button" [class.toolbar-button--active]="selectedTypes.fal" (click)="selectType('fal')">Light</button>
-    <button type="button" class="toolbar-item toolbar-button" [class.toolbar-button--active]="selectedTypes.fab" (click)="selectType('fab')">Brands</button>
-    <div class="spacer"></div>
-    <input class="toolbar-item toolbar-input" type="search" [ngModel]="filter" (ngModelChange)="filterChanged($event)" placeholder="Search icons">
+  <div class="card-header">
+
+    <div class="logo">
+      <a [routerLink]="'/'">
+        <img src="assets/logo.png">
+      </a>
+    </div>
+
+    <div class="toolbar">
+
+      <button 
+        type="button" 
+        class="toolbar-item toolbar-button" 
+        [class.toolbar-button--active]="selectedTypes.far" 
+        (click)="selectType('far')">
+        Regular
+      </button>
+
+      <button 
+        type="button" 
+        class="toolbar-item toolbar-button" 
+        [class.toolbar-button--active]="selectedTypes.fas" 
+        (click)="selectType('fas')">
+        Solid
+      </button>
+
+      <button 
+        type="button" 
+        class="toolbar-item toolbar-button" 
+        [class.toolbar-button--active]="selectedTypes.fal" 
+        (click)="selectType('fal')">
+        Light
+      </button>
+
+      <button 
+        type="button" 
+        class="toolbar-item toolbar-button" 
+        [class.toolbar-button--active]="selectedTypes.fab" 
+        (click)="selectType('fab')">
+        Brands
+      </button>
+
+      <div class="spacer"></div>
+
+      <input 
+        type="search" 
+        [(ngModel)]="filter"
+        placeholder="Search icons"
+        class="toolbar-item toolbar-input">
+
+    </div>
   </div>
 
   <div class="icons" *ngIf="icons">
-
     <div *ngFor="let type of types">
       <div *ngIf="selectedTypes[type]" style="margin-bottom: 3em;">
-        <div *ngFor="let icon of visibleIcons[type];" style="display: inline-block">
-          <fm-fa-icon 
-            [style.display]="matchesFilter(icon[5])? 'block': 'none'"
-            [icon]="icon"
-            [selected]="!!selectedIcons[type][icon[5]]"
-            (doToggleSelection)="toggleSelection(type, icon[5])">
-          </fm-fa-icon>
-        </div>
-        <div style="text-align: center" *ngIf="visibleIcons[type].length > 0">
-          <a href="javascript:void(0);" (click)="showMoreIcons(type)">show more</a>
-        </div>
+        <fm-icon-type-list
+          [iconType]="type"
+          [icons]="icons[type]"
+          [filter]="filter"
+          (selectionChanged)="selectionChanged()">
+        </fm-icon-type-list>
       </div>
     </div>
   </div>
@@ -37,10 +70,12 @@
     Loading icons...
   </div>
 
+</div>
 
-  <div>
-    {{ numberOfSelectedIcons }} selected icons: 
+<div class="download-banner" [class.up]="numberOfSelectedIcons > 0">
+  <div class="text-wrapper">
+    <strong>{{ numberOfSelectedIcons }} icon{{ numberOfSelectedIcons > 1 ? 's' : '' }} selected.</strong><br>
+    <span class="lower-text"><strong>FA Minify</strong> removed <strong>{{ iconsRemoved }}</strong> Icons and therefore <strong>saves you about {{ spaceSaved }}</strong></span>
   </div>
-
-  
+  <button type="button" class="banner-button" (click)="downloadFaMinifed()">Download</button>
 </div>

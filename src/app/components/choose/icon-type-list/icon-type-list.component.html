@@ -1,0 +1,7 @@
+<div *ngFor="let icon of visibleIcons" style="display: inline-block; margin: 10px;">
+  <fm-fa-icon [icon]="icon" (doToggleSelection)="toggleSelection(icon)"></fm-fa-icon>
+</div>
+
+<div style="text-align: center" *ngIf="visibleIcons.length > 0">
+  <a href="javascript:void(0);" (click)="showMoreIcons()">show more</a>
+</div>

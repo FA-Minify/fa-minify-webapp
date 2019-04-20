@@ -9,11 +9,13 @@ import { ROUTES } from './app.routes';
 import { ChooseComponent } from './components/choose/choose.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FAIconComponent } from './components/fa-icon/fa-icon.component';
+import { IconTypeListComponent } from './components/choose/icon-type-list/icon-type-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadComponent,
+    IconTypeListComponent,
     ChooseComponent,
     HeaderComponent,
     FAIconComponent

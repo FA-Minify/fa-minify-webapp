@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { IconService } from '../../services/icon.service';
+import { IconService, ParsedIcon } from '../../services/icon.service';
 
 @Component({
   selector: 'fm-fa-icon',
@@ -10,10 +10,7 @@ import { IconService } from '../../services/icon.service';
 export class FAIconComponent {
 
   @Input()
-  public icon: any[];
-
-  @Input()
-  public selected: boolean;
+  public icon: ParsedIcon;
 
   @Output()
   public doToggleSelection = new EventEmitter<{ iconName: string }>();
@@ -21,6 +18,6 @@ export class FAIconComponent {
   constructor(protected readonly iconService: IconService) { }
 
   public selectIcon() {
-    this.doToggleSelection.emit({ iconName: this.icon[5] });
+    this.doToggleSelection.emit({ iconName: this.icon.name });
   }
 }

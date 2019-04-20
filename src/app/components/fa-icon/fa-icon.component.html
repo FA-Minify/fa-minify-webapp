@@ -1,6 +1,6 @@
-<div class="icon" [class.selected]="selected" (click)="selectIcon()">
-  <svg [attr.viewBox]="'0 0 ' +  icon[0] + ' ' +  icon[1]">
-    <path [attr.d]="icon[4]" height="100%" width="100%" />
+<div class="icon" [class.selected]="!!icon.selected" (click)="selectIcon()">
+  <svg [attr.viewBox]="'0 0 ' +  icon.width + ' ' +  icon.height">
+    <path [attr.d]="icon.data" height="100%" width="100%" />
   </svg>
-  <div class="icon-name">{{ icon[5] }}</div>
+  <div class="icon-name">{{ icon.name }}</div>
 </div>
