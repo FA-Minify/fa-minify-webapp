@@ -15,5 +15,29 @@ body {
 body {
   margin: 0;
   background: #FFF;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Metropolis', Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src:
+    url('/assets/woff2/Metropolis-Regular.woff2') format('woff2'),
+    url('/assets/woff/Metropolis-Regular.woff') format('woff');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src:
+    url('/assets/woff2/Metropolis-Bold.woff2') format('woff2'),
+    url('/assets/woff/Metropolis-Bold.woff') format('woff');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src:
+    url('/assets/woff2/Metropolis-Black.woff2') format('woff2'),
+    url('/assets/woff/Metropolis-Black.woff') format('woff');
+  font-weight: 900;
 }
