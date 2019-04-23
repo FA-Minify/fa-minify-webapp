@@ -16,7 +16,8 @@ $fa-minify-blue: #6DA5E8;
 .drop-target {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 80%;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,7 +27,8 @@ $fa-minify-blue: #6DA5E8;
       display: flex;
     }
   }
-  & > * {
+
+  &>* {
     pointer-events: none;
   }
 }
@@ -83,4 +85,38 @@ $fa-minify-blue: #6DA5E8;
   font-size: 2em;
 
   text-align: center;
+}
+
+.file-uploader {
+  text-align: center;
+
+  input[type=file] {
+    position: fixed;
+    top: -1000px;
+    width: 0.1px;
+    height: 0.1px;
+  }
+
+  .select-file-button {
+    background: white;
+    color: $fa-minify-blue;
+    border: 1px solid $fa-minify-blue;
+    cursor: pointer;
+    padding: .7em 5em;
+    border-radius: 30px;
+    font-size: 1em;
+    outline: none;
+    transition: background 150ms linear, color 150ms linear;
+
+    &:hover,
+    &:focus {
+      background: lighten($fa-minify-blue, 30%);
+      color: $fa-minify-blue;
+    }
+
+    &:active {
+      background: $fa-minify-blue;
+      color: white;
+    }
+  }
 }
