@@ -19,11 +19,15 @@ export class ChooseComponent implements OnInit {
 
   public icons = null;
 
-  public selectedTypes = { all: true, fab: true, far: true, fas: true, fal: true };
+  public selectedTypes = { fab: true, far: true, fas: true, fal: true };
 
   public numberOfSelectedIcons = 0;
   public iconsRemoved = 887;
   public spaceSaved = '1000kb';
+
+  public get anyTypeSelected() {
+    return Object.keys(this.selectedTypes || {}).some(k => !!this.selectedTypes[k]);
+  }
 
   constructor(
     protected readonly iconService: IconService,
@@ -56,7 +60,7 @@ export class ChooseComponent implements OnInit {
     this.spaceSaved = this.iconService.getSavedData(this.icons);
   }
 
-  public selectType(type: IconType | 'all') {
+  public selectType(type: IconType) {
     this.selectedTypes[type] = !this.selectedTypes[type];
   }
 

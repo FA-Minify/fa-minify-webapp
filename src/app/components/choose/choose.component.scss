@@ -105,6 +105,13 @@ $fa-minify-blue: #6DA5E8;
   color: $fa-minify-blue;
 }
 
+.no-type-message {
+  font-size: 1.5em;
+  text-align: center;
+  color: rgba($fa-minify-blue, .5);
+  padding-top: 2em;
+}
+
 .download-banner {
   position: fixed;
   bottom: 0;

@@ -64,6 +64,7 @@
         </fm-icon-type-list>
       </div>
     </div>
+    <div *ngIf="!anyTypeSelected" class="no-type-message">No icon style (regular / solid / ...) selected!</div>
   </div>
 
   <div *ngIf="!icons" style="text-align: center">
