@@ -16,7 +16,7 @@ $fa-minify-blue: #6DA5E8;
 .drop-target {
   position: relative;
   width: 100%;
-  height: 80%;
+  height: 600px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -98,6 +98,7 @@ $fa-minify-blue: #6DA5E8;
   }
 
   .select-file-button {
+    opacity: .5;
     background: white;
     color: $fa-minify-blue;
     border: 1px solid $fa-minify-blue;
@@ -106,17 +107,14 @@ $fa-minify-blue: #6DA5E8;
     border-radius: 30px;
     font-size: 1em;
     outline: none;
-    transition: background 150ms linear, color 150ms linear;
+    transition: background 150ms, color 150ms, opacity 150ms;
 
     &:hover,
     &:focus {
-      background: lighten($fa-minify-blue, 30%);
+      background: lighten($fa-minify-blue, 32%);
+      border-color: $fa-minify-blue;
       color: $fa-minify-blue;
-    }
-
-    &:active {
-      background: $fa-minify-blue;
-      color: white;
+      opacity: .8;
     }
   }
 }
