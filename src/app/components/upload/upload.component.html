@@ -1,6 +1,6 @@
 <div class="drop-card">
-    
-  <div class="drop-target" #dropTarget>
+
+  <div #dropTarget class="drop-target" [class.is-dragover]="isDragOver">
 
     <div class="drop-content" *ngIf="!isDragOver">
       <img class="logo" src="assets/logo.png"><br>
@@ -8,7 +8,7 @@
         About to add 1000kb worth of Javascript just to display those three social icons on your website footer? <br>
         <strong>Don't be that person.</strong>
       </p>
-      
+
       <div class="lower-description-wrapper">
         <p class="lower-description">
           Simply drag and drop your all.js file,

@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, OnDestroy } from '@angular/core';
-import { IconService } from '../../services/icon.service';
 import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { IconService } from '../../services/icon.service';
+import { FileDropService, FileDropEvent, FileDropEventType } from '../../services/file-drop.service';
 
 @Component({
   selector: 'fm-upload',
@@ -12,77 +15,63 @@ export class UploadComponent implements OnInit, OnDestroy {
   @ViewChild('dropTarget')
   public dropTarget: ElementRef<HTMLDivElement>;
 
-  @ViewChild('dropOverlay')
-  public dropOverlay: ElementRef<HTMLDivElement>;
-
   public isDragOver = false;
 
-  constructor(protected iconService: IconService, protected router: Router) { }
+  private subscription: Subscription;
+
+  constructor(
+    protected fileDropService: FileDropService,
+    protected iconService: IconService,
+    protected router: Router
+  ) { }
 
   public ngOnInit() {
-    const native = this.dropTarget.nativeElement as HTMLDivElement;
 
-    ['dragenter', 'dragstart'].forEach(event => native.addEventListener(event, this.dragEnterListener));
-    ['dragleave', 'dragend'].forEach(event => native.addEventListener(event, this.dragLeaveListener));
+    const target = this.dropTarget.nativeElement;
 
-    ['dragover'].forEach(event => native.addEventListener(event, (e: DragEvent) => {
-      e.stopPropagation();
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'copy';
-    }));
 
-    this.dropTarget.nativeElement.addEventListener('drop', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
+    this.subscription = this.fileDropService.subscribe(target, (e: FileDropEvent) => {
+      switch (e.type) {
+        case FileDropEventType.ENTER: this.isDragOver = true; break;
+        case FileDropEventType.LEAVE: this.isDragOver = false; break;
+        case FileDropEventType.DROP: {
 
-      this.isDragOver = false;
-      const files = e.dataTransfer.files;
+          // find dropped js file
+          let jsFile: File = null;
+          for (let i = 0; i < e.files.length; i++) {
+            if (e.files[i].type.match(/text\/javascript/)) {
+              jsFile = e.files[i];
+            }
+          }
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+          if (!!jsFile) {
+            // if js file was dropped we can read it as text and throw it into the parser
+            this.onFileSelect(jsFile);
 
-        if (file.type.match(/text\/javascript/)) {
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            const result = (reader.result || '') as string;
-            this.iconService.loadIcons(result);
-            this.router.navigate(['choose']);
-          };
-
-          reader.readAsText(file);
+          } else {
+            // when the user didn't drop a js file just reset the ui and let him drop another file
+            this.isDragOver = false;
+          }
         }
       }
     });
+
   }
 
   public ngOnDestroy() {
-    const native = this.dropTarget.nativeElement;
-    ['dragenter'].forEach(event => native.removeEventListener(event, this.dragEnterListener));
-    ['dragleave', 'dragend', 'drop'].forEach(event => native.removeEventListener(event, this.dragLeaveListener));
+    const target = this.dropTarget.nativeElement;
+    this.fileDropService.unsubscribe(target, this.subscription);
   }
 
-  private dragEnterListener = (e: DragEvent) => {
-    this.isDragOver = true;
-
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (this.dropTarget && this.dropTarget.nativeElement) {
-      this.dropTarget.nativeElement.classList.add('is-dragover');
-    }
+  public onFileSelect(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.isDragOver = false;
+      const result = (reader.result || '') as string;
+      this.iconService.loadIcons(result);
+      this.router.navigate(['choose']);
+    };
+    reader.readAsText(file);
   }
-
-  private dragLeaveListener = (e: DragEvent) => {
-    this.isDragOver = false;
-
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (this.dropTarget && this.dropTarget.nativeElement) {
-      this.dropTarget.nativeElement.classList.remove('is-dragover');
-    }
-  }
-
 
 }
