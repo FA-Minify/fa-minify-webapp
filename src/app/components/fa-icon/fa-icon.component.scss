@@ -9,6 +9,11 @@ $fa-minify-blue: #6DA5E8;
   cursor: pointer;
   overflow: hidden;
 
+  transition:   
+    box-shadow 150ms linear, 
+    background 150ms linear, 
+    color 150ms linear;
+
   .icon-name {
     font-size: 75%;
     word-wrap: break-word;
