@@ -17,12 +17,10 @@ export interface FileDropEvent {
 @Injectable({ providedIn: 'root' })
 export class FileDropService {
 
-  protected emitterMap: {
-    [a: string]: {
-      target: HTMLElement | Node,
-      emitter: EventEmitter<FileDropEvent>
-    }
-  } = {};
+  protected emitterTargetArray: Array<{
+    target: HTMLElement | Node,
+    emitter: EventEmitter<FileDropEvent>
+  }> = [];
 
   private initListener(target: HTMLElement | Node) {
     ['dragenter', 'dragstart'].forEach(event => target.addEventListener(event, this.dragEnterListener.bind(this)));
@@ -40,19 +38,19 @@ export class FileDropService {
 
   private dragEnterListener(e: DragEvent) {
     const target = e.target;
-    const emitter = this.getEmitterForTarget(target);
+    const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
 
-    if (emitter) {
-      emitter.emit({ baseEvent: e, type: FileDropEventType.ENTER });
+    if (wrapper && wrapper.emitter) {
+      wrapper.emitter.emit({ baseEvent: e, type: FileDropEventType.ENTER });
     }
   }
 
   private dragLeaveListener(e: DragEvent) {
     const target = e.target;
-    const emitter = this.getEmitterForTarget(target);
+    const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
 
-    if (emitter) {
-      emitter.emit({ baseEvent: e, type: FileDropEventType.LEAVE });
+    if (wrapper && wrapper.emitter) {
+      wrapper.emitter.emit({ baseEvent: e, type: FileDropEventType.LEAVE });
     }
   }
 
@@ -61,50 +59,36 @@ export class FileDropService {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
     const target = e.target;
-    const emitter = this.getEmitterForTarget(target);
+    const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
 
-    if (emitter) {
-      emitter.emit({ baseEvent: e, type: FileDropEventType.OVER });
+    if (wrapper && wrapper.emitter) {
+      wrapper.emitter.emit({ baseEvent: e, type: FileDropEventType.OVER });
     }
+
   }
 
   private dragDropListener(e: DragEvent) {
     e.stopPropagation();
     e.preventDefault();
     const target = e.target;
-    const emitter = this.getEmitterForTarget(target);
+    const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
 
-    if (emitter) {
-      emitter.emit({ baseEvent: e, files: e.dataTransfer.files, type: FileDropEventType.DROP });
+    if (wrapper && wrapper.emitter) {
+      wrapper.emitter.emit({ baseEvent: e, files: e.dataTransfer.files, type: FileDropEventType.DROP });
     }
   }
 
   public subscribe(target: HTMLElement | Node, cb: (e: FileDropEvent) => any) {
     this.initListener(target);
     const emitter = new EventEmitter<FileDropEvent>();
-    this.emitterMap[this.randomId()] = { emitter, target };
+    this.emitterTargetArray.push({ emitter, target });
     return emitter.subscribe(cb);
   }
 
   public unsubscribe(target: HTMLElement | Node, subscription: Subscription) {
     this.removeListener(target);
+    this.emitterTargetArray = this.emitterTargetArray.filter(wrap => wrap.target !== target);
     subscription.unsubscribe();
   }
 
-  private randomId() {
-    return btoa('' + Math.random()).substring(0, 20);
-  }
-
-  private getEmitterForTarget(targetElement: EventTarget | HTMLElement | Node) {
-    const id = Object.keys(this.emitterMap).find(mapId => {
-      const { target } = this.emitterMap[mapId];
-      return target === targetElement;
-    });
-
-    if (!!id) {
-      return this.emitterMap[id].emitter;
-    }
-
-    return null;
-  }
 }
