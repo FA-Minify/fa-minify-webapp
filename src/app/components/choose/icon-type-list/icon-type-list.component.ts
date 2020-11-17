@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { IconType } from 'fa-minify';
-import { ParsedIcon, IconWrapper } from '../../../services/icon.service';
-import { filterQueryId } from '@angular/core/src/view/util';
+import { ParsedIcon } from '../../../services/icon.service';
 
 @Component({
   selector: 'fm-icon-type-list',

@@ -12,10 +12,10 @@ import { FileDropService, FileDropEvent, FileDropEventType } from '../../service
 })
 export class UploadComponent implements OnInit, OnDestroy {
 
-  @ViewChild('dropTarget')
+  @ViewChild('dropTarget', { static: true })
   public dropTarget: ElementRef<HTMLDivElement>;
 
-  @ViewChild('fileInput')
+  @ViewChild('fileInput', { static: true })
   public fileInput: ElementRef<HTMLInputElement>;
 
   public isDragOver = false;

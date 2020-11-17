@@ -63,8 +63,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fa-minify-webapp:build",
-            "hmrWarning": false
+            "browserTarget": "fa-minify-webapp:build"
           },
           "configurations": {
             "hmr": {
