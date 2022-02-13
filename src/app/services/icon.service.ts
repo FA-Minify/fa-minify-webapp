@@ -40,10 +40,6 @@ export class IconService {
     for (const type in fileIcons) {
       const iconType = type as IconType;
       this.availableIcons[iconType] = Object.keys(fileIcons[iconType] || {}).map(iconKey => {
-        console.info(fileIcons);
-
-        const w = fileIcons[iconType][iconKey][0];
-
         return {
           width: fileIcons[iconType][iconKey][0],
           height: fileIcons[iconType][iconKey][1],
