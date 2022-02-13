@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { getIconsFromFile, removeUnusedIcons } from 'fa-minify';
+import { getIconsFromFile, IconType, removeUnusedIcons } from 'fa-minify';
 
 export interface ParsedIcon {
   width: number;
   height: number;
-  unknown: Array<any>;
+  unknown: Array<unknown>;
   unicode: string;
   data: string;
   name: string;
@@ -16,15 +16,16 @@ export interface IconWrapper<T> {
   fal: T;
   far: T;
   fas: T;
+  fat: T;
 }
 
 @Injectable({ providedIn: 'root' })
 export class IconService {
 
-  public fileContent: string;
+  public fileContent?: string;
 
-  public availableIcons: IconWrapper<Array<ParsedIcon>> = null;
-  public emptyIcons: IconWrapper<Array<ParsedIcon>> = { fab: [], fal: [], far: [], fas: [] };
+  public emptyIcons: IconWrapper<Array<ParsedIcon>> = { fab: [], fal: [], far: [], fas: [], fat: [] };
+  public availableIcons: IconWrapper<Array<ParsedIcon>> | null = null;
 
   public loadIcons(fileContent: string) {
     this.fileContent = fileContent;
@@ -34,38 +35,45 @@ export class IconService {
       return;
     }
 
-    this.availableIcons = JSON.parse(JSON.stringify(this.emptyIcons));
+    this.availableIcons = JSON.parse(JSON.stringify(this.emptyIcons)) as IconWrapper<ParsedIcon[]>;
 
-    Object.keys(fileIcons).forEach(type => {
-      this.availableIcons[type] = Object.keys(fileIcons[type] || {}).map(iconKey => {
+    for (const type in fileIcons) {
+      const iconType = type as IconType;
+      this.availableIcons[iconType] = Object.keys(fileIcons[iconType] || {}).map(iconKey => {
+        console.info(fileIcons);
+
+        const w = fileIcons[iconType][iconKey][0];
+
         return {
-          width: fileIcons[type][iconKey][0],
-          height: fileIcons[type][iconKey][1],
-          unknown: fileIcons[type][iconKey][2],
-          unicode: fileIcons[type][iconKey][3],
-          data: fileIcons[type][iconKey][4],
+          width: fileIcons[iconType][iconKey][0],
+          height: fileIcons[iconType][iconKey][1],
+          unknown: fileIcons[iconType][iconKey][2],
+          unicode: fileIcons[iconType][iconKey][3],
+          data: fileIcons[iconType][iconKey][4],
           name: iconKey,
+          selected: false
         } as ParsedIcon;
       });
+    }
+    Object.keys(fileIcons).forEach((type) => {
+
     });
 
     return this.availableIcons;
   }
 
   public getFile(icons: IconWrapper<Array<ParsedIcon>>) {
+    const cfg: Record<IconType, Array<string>> = { far: [], fal: [], fas: [], fab: [], fat: [] };
 
-    const cfg = { far: [], fal: [], fas: [], fab: [] };
-
-    Object.keys(cfg).map(iconType => {
+    Object.keys(cfg).map(type => {
+      const iconType = type as IconType;
       const typeIcons = (icons[iconType] || []) as Array<ParsedIcon>;
       typeIcons.filter((icon) => icon.selected).forEach(icon => {
         cfg[iconType].push(icon.name);
       });
     });
 
-    return removeUnusedIcons(this.fileContent, {
-      usedIcons: cfg
-    });
+    return removeUnusedIcons(this.fileContent!, { usedIcons: cfg });
   }
 
   public getSavedData(icons: IconWrapper<Array<ParsedIcon>>) {

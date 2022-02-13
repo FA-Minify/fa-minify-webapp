@@ -10,7 +10,7 @@ import { IconService, ParsedIcon } from '../../services/icon.service';
 export class FAIconComponent {
 
   @Input()
-  public icon: ParsedIcon;
+  public icon!: ParsedIcon;
 
   @Output()
   public doToggleSelection = new EventEmitter<{ iconName: string }>();

@@ -23,19 +23,20 @@ export class FileDropService {
   }> = [];
 
   private initListener(target: HTMLElement | Node) {
-    ['dragenter', 'dragstart'].forEach(event => target.addEventListener(event, this.dragEnterListener.bind(this)));
-    ['dragleave', 'dragend'].forEach(event => target.addEventListener(event, this.dragLeaveListener.bind(this)));
-    ['dragover'].forEach(event => target.addEventListener(event, this.dragOverListener.bind(this)));
-    ['drop'].forEach(event => target.addEventListener(event, this.dragDropListener.bind(this)));
+    ['dragenter', 'dragstart'].forEach(event => target.addEventListener(event, this.dragEnterListenerRef));
+    ['dragleave', 'dragend'].forEach(event => target.addEventListener(event, this.dragLeaveListenerRef));
+    ['dragover'].forEach(event => target.addEventListener(event, this.dragOverListenerRef));
+    ['drop'].forEach(event => target.addEventListener(event, this.dragDropListenerRef));
   }
 
   private removeListener(target: HTMLElement | Node) {
-    ['dragenter', 'dragstart'].forEach(event => target.removeEventListener(event, this.dragEnterListener.bind(this)));
-    ['dragleave', 'dragend'].forEach(event => target.removeEventListener(event, this.dragLeaveListener.bind(this)));
-    ['dragover'].forEach(event => target.removeEventListener(event, this.dragOverListener.bind(this)));
-    ['drop'].forEach(event => target.removeEventListener(event, this.dragDropListener.bind(this)));
+    ['dragenter', 'dragstart'].forEach(event => target.removeEventListener(event, this.dragEnterListenerRef));
+    ['dragleave', 'dragend'].forEach(event => target.removeEventListener(event, this.dragLeaveListenerRef));
+    ['dragover'].forEach(event => target.removeEventListener(event, this.dragOverListenerRef));
+    ['drop'].forEach(event => target.removeEventListener(event, this.dragDropListenerRef));
   }
 
+  private dragEnterListenerRef = (e: Event) => this.dragEnterListener(e as DragEvent);
   private dragEnterListener(e: DragEvent) {
     const target = e.target;
     const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
@@ -45,6 +46,7 @@ export class FileDropService {
     }
   }
 
+  private dragLeaveListenerRef = (e: Event) => this.dragLeaveListener(e as DragEvent);
   private dragLeaveListener(e: DragEvent) {
     const target = e.target;
     const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
@@ -54,27 +56,33 @@ export class FileDropService {
     }
   }
 
+  private dragOverListenerRef = (e: Event) => this.dragOverListener(e as DragEvent);
   private dragOverListener(e: DragEvent) {
     e.stopPropagation();
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = 'copy';
+    }
     const target = e.target;
     const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
 
     if (wrapper && wrapper.emitter) {
       wrapper.emitter.emit({ baseEvent: e, type: FileDropEventType.OVER });
     }
-
   }
 
+  private dragDropListenerRef = (e: Event) => this.dragDropListener(e as DragEvent);
   private dragDropListener(e: DragEvent) {
     e.stopPropagation();
     e.preventDefault();
     const target = e.target;
     const wrapper = this.emitterTargetArray.find(_wrapper => _wrapper.target === target);
 
+    const files = e.dataTransfer?.files;
+    if (!files) return;
+
     if (wrapper && wrapper.emitter) {
-      wrapper.emitter.emit({ baseEvent: e, files: e.dataTransfer.files, type: FileDropEventType.DROP });
+      wrapper.emitter.emit({ baseEvent: e, files, type: FileDropEventType.DROP });
     }
   }
 

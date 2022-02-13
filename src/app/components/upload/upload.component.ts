@@ -13,14 +13,14 @@ import { FileDropService, FileDropEvent, FileDropEventType } from '../../service
 export class UploadComponent implements OnInit, OnDestroy {
 
   @ViewChild('dropTarget', { static: true })
-  public dropTarget: ElementRef<HTMLDivElement>;
+  public dropTarget!: ElementRef<HTMLDivElement>;
 
   @ViewChild('fileInput', { static: true })
-  public fileInput: ElementRef<HTMLInputElement>;
+  public fileInput!: ElementRef<HTMLInputElement>;
 
   public isDragOver = false;
 
-  private subscription: Subscription;
+  private subscription: Subscription | null = null;
 
   constructor(
     protected fileDropService: FileDropService,
@@ -36,7 +36,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         case FileDropEventType.LEAVE: this.isDragOver = false; break;
         case FileDropEventType.DROP: {
 
-          const jsFile = this.getJSFile(e.files);
+          const jsFile = this.getJSFile(e.files!);
 
           if (!!jsFile) {
             // if js file was dropped we can read it as text and throw it into the parser
@@ -55,14 +55,14 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     const target = this.dropTarget.nativeElement;
-    this.fileDropService.unsubscribe(target, this.subscription);
+    this.fileDropService.unsubscribe(target, this.subscription!);
   }
 
   private initFileInput() {
     this.fileInput.nativeElement.addEventListener('change', e => {
       const input = this.fileInput.nativeElement;
       const files = input.files;
-      const jsFile = this.getJSFile(files);
+      const jsFile = this.getJSFile(files!);
       if (jsFile) {
         this.onFileSelect(jsFile);
       } else {
@@ -73,7 +73,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   private getJSFile(files: FileList) {
     // find dropped js file
-    let jsFile: File = null;
+    let jsFile: File | null = null;
     for (let i = 0; i < files.length; i++) {
       if (files[i].type.match(/text\/javascript/)) {
         jsFile = files[i];

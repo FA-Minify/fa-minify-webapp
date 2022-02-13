@@ -9,9 +9,9 @@ import { ParsedIcon } from '../../../services/icon.service';
 })
 export class IconTypeListComponent implements OnChanges, OnInit {
 
-  @Input() public icons: Array<ParsedIcon>;
-  @Input() public iconType: IconType;
-  @Input() public filter: string;
+  @Input() public icons!: Array<ParsedIcon>;
+  @Input() public iconType!: IconType;
+  @Input() public filter!: string;
 
   @Output() public selectionChanged = new EventEmitter<void>();
 
